@@ -1,1 +1,28 @@
 
+例：为数组每个元素应用指定的函数运算
+1.命令式
+Array.prototype.each=function(f){
+if(this.length){
+    var a=f(this.slice(0,1));//获取数组第一个值，并用函数来计算
+    var b=this.slice(1);//获取制定数组的第一个后面所有元素值
+    var c=[a].concat(b.each(f));//定义a为新数组元素，利用递归逐个把后面所有的元素都进行一次函数计算，连接到数组中
+    return c;
+}else{
+    return [];
+}
+}
+
+var a=[1,2,3,4];
+var f=function(x){
+  return x*x;
+}
+alert(a.each(f));//1  4  9  16
+
+2.函数式编程
+Array.prototype.each=function(f){//定义数组对象扩展表达式
+  return this.length?[f(this.slice(0,1))].concat(this.slice(1).each(f)):[];
+}
+//var a=[1,2,3,4];
+alert([1,2,3,4].each(function(x){//调用数组对象扩展方法表达式
+  return x*x;
+}));
