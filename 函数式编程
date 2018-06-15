@@ -26,3 +26,71 @@ Array.prototype.each=function(f){//定义数组对象扩展表达式
 alert([1,2,3,4].each(function(x){//调用数组对象扩展方法表达式
   return x*x;
 }));
+
+例二：函数式数据闭包，如何使用函数临时寄存运算数据，并通过函数来改变内部数据
+(function(){
+        var a=1;
+        set=function(x){
+        a=x;
+        }
+        get=function(){
+        return a;
+        }
+})();
+alert(get());
+set(2);
+alert(get());
+优点：对象向外面展示的都是接口方法，有效的避免了外部系统直接修改对象成员
+
+例三：函数语言的核心是运算
+  分支实现连续运算的的第一种方式：三元表达式实现连续运算
+  
+           1.连续赋值运算
+           var a=b=c=1;
+           2.三元运算替代分支结构,多层分支，对象 函数 方法
+           event？event：window.event;//2.1替代简单分支if-else
+           var a=((a==1)?alert(1):(a==2)?alert(2):(a==3)?alert(3):(a==4)?alert(4):alert(undefined));//2.2代替多层分支switch()
+
+          var f=function(x,y){
+                return (x+y)/2;
+                }
+                alert (f(10,20));
+             ==>
+             alert(
+                    (function(x,y){return (x+y)/2})(10,20)
+                    )
+           多层：使用多个小括号连续调用
+           alert(
+               (function(){
+                    return function(x,y){
+                        return function(){
+                            return (x+y)/2}
+        }
+           })()(10,20)()
+           );
+           3.使用表达式创建对象
+           var o=typeof 56;
+        alert((
+            new (
+              (o=="string")? String:
+              (o=="number")? Number:
+              (o=="boolean")? Boolean: 
+              (o=="array")? Array:Object 
+        )
+        ).toString());//注意这个输出是0
+分支实现连续运算的的第二种方式：逻辑表达式----逻辑与和逻辑或
+    4.逻辑与和逻辑或的组合可以达到三元运算符的逻辑功能
+    
+     var a=(
+         (a==1)&&alert(1)||
+         (a==2)&&alert(2)||
+         (a==3)&&alert(3)||
+         (a==4)&&alert(4)||
+         alert(undefined)
+    )
+  
+  例四：对于循环结构实现连续运算的方法--递归运算
+   
+   
+   
+   
